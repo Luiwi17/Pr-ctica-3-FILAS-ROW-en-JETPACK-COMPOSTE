@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +17,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -29,14 +34,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            app()
+            App()
         }
     }
 }
 
 @Preview
 @Composable
-fun app() {
+fun App() {
+    var counter by remember { mutableIntStateOf(0) }
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -50,6 +57,18 @@ fun app() {
                 painter = painterResource(id = R.drawable.lyxan_logo),
                 contentDescription = "Logo"
             )
+            Row(modifier = Modifier.padding(top = 8.dp)) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_android_black_24dp),
+                    contentDescription = "Android",
+                    modifier = Modifier.clickable { counter++ }
+                )
+                Text(
+                    text = counter.toString(),
+                    color = Color.White,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
+            }
             Text(
                 text = "Luiwi",
                 fontSize = 32.sp,
@@ -72,16 +91,13 @@ fun app() {
                     .padding(16.dp)
             ) {
                 item {
-                    Text(text = "Stack:", color = Color.Black)
-                    Text(text = "Java", color = Color.Black)
-                    Text(text = "KOTLIN", color = Color.Black)
-                    Text(text = "SUSCRIBETE", color = Color.Black)
-                    Text(text = "SUSCRIBETE", color = Color.Black)
-                    Text(text = "SUSCRIBETE", color = Color.Black)
-                    Text(text = "SUSCRIBETE", color = Color.Black)
-                    Text(text = "SUSCRIBETE", color = Color.Black)
-                    Text(text = "SUSCRIBETE", color = Color.Black)
-                    Text(text = "SUSCRIBETE", color = Color.Black)
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(text = "Stack:", color = Color.Black)
+                        Text(text = "Java", color = Color.Black)
+                        Text(text = "KOTLIN", color = Color.Black)
+                        Text(text = "SUSCRIBETE", color = Color.Black)
+                        Text(text = "SUSCRIBETE", color = Color.Black)
+                    }
                 }
             }
         }
